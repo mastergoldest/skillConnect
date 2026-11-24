@@ -5,10 +5,8 @@ import {
     type FormEvent,
     type ChangeEvent,
 } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-    UserRound,
     Mail,
     GraduationCap,
     Building2,
@@ -20,21 +18,19 @@ import {
     Plus,
     X,
     Save,
-    LogOut,
     Sparkles,
     Camera,
 } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
-import ThemeToggle from "../../components/ThemeToggle";
-import DashboardSidebar from "../../components/dashboard/DashboardSidebar";
+
 
 const API_URL =
     import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function MyProfile() {
-    const { user, logout, refreshUser } = useAuth();
-    const navigate = useNavigate();
+    const { user, refreshUser } = useAuth();
+  
 
     const [fullName, setFullName] = useState("");
     const [bio, setBio] = useState("");
@@ -65,10 +61,6 @@ function MyProfile() {
         bio !== (user.bio || "") ||
         JSON.stringify(skills) !== JSON.stringify(user.skills || []);
 
-    const handleLogout = async () => {
-        await logout();
-        navigate("/login", { replace: true });
-    };
 
     const handleAddSkill = () => {
         const trimmedSkill = newSkill.trim();

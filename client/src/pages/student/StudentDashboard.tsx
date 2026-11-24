@@ -1,6 +1,6 @@
 
 import { useEffect, useState, type ChangeEvent, type ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import {
@@ -26,7 +26,6 @@ const API_URL =
 
 function StudentDashboard() {
   const { user, refreshUser } = useAuth();
-  const navigate = useNavigate();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");

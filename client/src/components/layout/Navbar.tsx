@@ -23,7 +23,7 @@ const navigation = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user, isAuthenticated, isLoading, logout } = useAuth();
+  const { user, isLoading, logout } = useAuth();
   const navigate = useNavigate();
 
   const dashboardPath =
