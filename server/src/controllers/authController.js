@@ -29,23 +29,24 @@ const generateToken = () => {
   return crypto.randomBytes(32).toString("hex");
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
+const authCookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+  maxAge: 24 * 60 * 60 * 1000,
+  path: "/",
+};
+
 const createAuthCookie = (res, token) => {
-  res.cookie("skillconnect_token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 24 * 60 * 60 * 1000,
-    path: "/",
-  });
+  res.cookie("skillconnect_token", token, authCookieOptions);
 };
 
 const clearAuthCookie = (res) => {
-  res.clearCookie("skillconnect_token", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-  });
+  const { maxAge, ...clearOptions } = authCookieOptions;
+
+  res.clearCookie("skillconnect_token", clearOptions);
 };
 
 const getSafeUser = (user) => ({
